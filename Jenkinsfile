@@ -13,9 +13,9 @@ pipeline {
             sh '''
                 cd /home/slave/workspace/finel_project/scripts
                 chmod 755 *.sh
-		            chmod 755 *.py
-		            chmod 755 *.c
-		            chmod 755 *.java
+		chmod 755 *.py
+		chmod 755 *.c
+		chmod 755 *.java
             '''
          }
       }      
@@ -30,9 +30,9 @@ pipeline {
 			 expression { Language == 'BASH'}
 		 }
 		 steps {
+			 echo 'Execute bash script'
 			 sh '''
-			    echo 'Execute bash script'
-		      echo "Testing input string $PARAM"
+		      	    echo "Testing input string $PARAM"
 			    cd /home/slave/workspace/finel_project/scripts
 			    ./bash.sh $PARAM
 			 '''
@@ -45,12 +45,12 @@ pipeline {
             	}
             	steps {
                 	sh '''
-			              echo "Execute python script"
-		      	        echo "Testing input string $PARAM" 
-            	      cd /home/slave/workspace/finel_project/scripts
-                    python python.py $PARAM
-                    python python.py $PARAM >> /home/slave/results
-			            '''
+		          echo "Execute python script"
+		      	  echo "Testing input string $PARAM" 
+            	          cd /home/slave/workspace/finel_project/scripts
+                          python python.py $PARAM
+                          python python.py $PARAM >> /home/slave/results
+			'''
             	}
     	   }
 	   stage ('C') 
@@ -60,12 +60,12 @@ pipeline {
             	}
             	steps {
                 	sh '''
-			              echo 'Execute C script'
-			              echo "Testing input string $PARAM"
-			              cd /home/slave/workspace/finel_project/scripts
-			              ./Cfile.c $PARAM
-			              ./Cfile.c $PARAM >> /home/slave/results
-			            '''
+			  echo 'Execute C script'
+			  echo "Testing input string $PARAM"
+			  cd /home/slave/workspace/finel_project/scripts
+			  ./Cfile.c $PARAM
+			  ./Cfile.c $PARAM >> /home/slave/results
+			'''
             	}
     	   }
 	   stage ('ALL') 
@@ -75,17 +75,17 @@ pipeline {
             	}
             	steps {
                 	sh '''
-			              echo 'Execute ALL script'
-			              cd /home/slave/workspace/finel_project/scripts
-			              python python.py $PARAM
-			              python python.py $PARAM >> /home/slave/results
-			              ./Cfile.c $PARAM
-		                ./Cfile.c $PARAM >> /home/slave/results
-			              ./bash.sh $PARAM
-		                ./bash.sh $PARAM >> /home/slave/results
-			              ./javaFile.py $PARAM
-			              ./javaFile.py $PARAM >> /home/slave/results
-                  '''
+			   echo 'Execute ALL script'
+			   cd /home/slave/workspace/finel_project/scripts
+			   python python.py $PARAM
+			   python python.py $PARAM >> /home/slave/results
+			   ./Cfile.c $PARAM
+		           ./Cfile.c $PARAM >> /home/slave/results
+			   ./bash.sh $PARAM
+		           ./bash.sh $PARAM >> /home/slave/results
+			   ./javaFile.py $PARAM
+			   ./javaFile.py $PARAM >> /home/slave/results
+                  	'''
             	}
     	   }
 	   stage ('javaFile') 
@@ -95,18 +95,18 @@ pipeline {
             	}
             	steps {
                 	sh '''
-			              echo "Execute javaFile script"
-			              cd /home/slave/workspace/finel_project/scripts
-			              ./javaFile.py $PARAM
-			              ./javaFile.py $PARAM >> /home/slave/results
-			            '''
+			  echo "Execute javaFile script"
+			  cd /home/slave/workspace/finel_project/scripts
+			  ./javaFile.py $PARAM
+			  ./javaFile.py $PARAM >> /home/slave/results
+			'''
             	}
     	   }
 	stage('Saving Results') {
          steps {
             echo 'Saving Results process..'
             sh '''
-	            report_file="${HOME}/Documents/Deployment/report"
+	      report_file="${HOME}/Documents/Deployment/report"
               mkdir -p ${HOME}/Documents/Deployment/              
               if [ -f "${report_file}" ]; then
                 echo "file ${report_file} exists"
