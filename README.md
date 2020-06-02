@@ -1,2 +1,2 @@
-# Final_projects_Jenkins
+# Final_project_Jenkins
 Final projects Jenkins in the Course
