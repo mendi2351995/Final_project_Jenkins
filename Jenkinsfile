@@ -98,7 +98,7 @@ pipeline {
 			  echo "Execute javaFile script"
 			  cd /home/slave/workspace/finel_project/scripts
 			  ./javaFile.py $PARAM
-			  ./javaFile.py $PARAM >> /home/slave/results
+			  ./javaFile.py $PARAM >> results
 			'''
             	}
     	   }
@@ -113,10 +113,8 @@ pipeline {
               else
 	              touch ${report_file}
               fi  
-	      touch ${WORKSPACE}/scripts
-	      touch ${WORKSPACE}/scripts/results
-              echo "Build Number $BUILD_NUMBER" >> ${report_file}
-	      cat ${WORKSPACE}/scripts/results >> ${report_file}
+	      echo "Build Number $BUILD_NUMBER" >> ${report_file}
+              cat ${WORKSPACE}/scripts/results >> ${report_file}
 	      echo "#############################" >> ${report_file}
             '''
          }
