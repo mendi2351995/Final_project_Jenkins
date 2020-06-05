@@ -27,7 +27,7 @@ pipeline {
 	 stage('Bash') 
 	   {
 		 when{
-			 expression { Language == 'BASH'}
+			 expression { Language == 'BASH' || Language == 'ALL'}
 		 }
 		 steps {
 			 echo 'Execute bash script'
@@ -41,7 +41,7 @@ pipeline {
 	   stage ('PYTHON') 
 	   {
       		when {
-                expression { Language == 'PYTHON'}
+                expression { Language == 'PYTHON' || Language == 'ALL'}
             	}
             	steps {
                 	sh '''
@@ -56,7 +56,7 @@ pipeline {
 	   stage ('C') 
 	   {
       		when {
-                expression { Language == 'C'}
+                expression { Language == 'C' || Language == 'ALL'}
             	}
             	steps {
                 	sh '''
@@ -68,30 +68,10 @@ pipeline {
 			'''
             	}
     	   }
-	   stage ('ALL') 
-	   {
-      		when {
-                expression { Language == 'ALL'}
-            	}
-            	steps {
-                	sh '''
-			   echo 'Execute ALL script'
-			   cd /home/slave/workspace/finel_project/scripts
-			   python python.py $PARAM
-			   python python.py $PARAM >> /home/slave/results
-			   ./Cfile.c $PARAM
-		           ./Cfile.c $PARAM >> /home/slave/results
-			   ./bash.sh $PARAM
-		           ./bash.sh $PARAM >> /home/slave/results
-			   ./javaFile.py $PARAM
-			   ./javaFile.py $PARAM >> /home/slave/results
-                  	'''
-            	}
-    	   }
 	   stage ('javaFile') 
 	   {
       		when {
-                expression { Language == 'JAVA'}
+                expression { Language == 'JAVA' || Language == 'ALL'}
             	}
             	steps {
                 	sh '''
@@ -120,6 +100,19 @@ pipeline {
          }
       }	   
       
-      
    }
+	post {   
+		always {
+			echo 'I run scripts in the gob'   
+		}   
+		success {   
+			echo 'I run script Successfully'   
+		}   
+		failure {
+			echo 'I couldnt run the script'
+		}   
+		unstable {   
+			echo 'I will only get executed if this is unstable'   
+		}   
+	}
 }
